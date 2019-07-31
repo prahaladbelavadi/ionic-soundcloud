@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { HomePage } from './home/home.page';
+import { SoundCloudService } from './sound-cloud.service';
 
 @Component({
   selector: 'app-root',
@@ -10,18 +12,11 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  constructor(
-    private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
-  ) {
-    this.initializeApp();
-  }
+rootPage: any = HomePage;
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
-    });
-  }
+constructor(platform: Platform, soundCloud: SoundCloudService) {
+  platform.ready().then(() => {
+    soundCloud.fetchTracks(120, 'electronic');
+  });
+}
 }
